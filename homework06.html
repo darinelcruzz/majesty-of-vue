@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>Familia Vazquez</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h1>Todos</h1>
+			<ul class="list-group">
+				<li v-for="member in members" class="list-group-item">
+					{{ member.name }} ({{ member.age }})
+				</li>
+			</ul>
+
+			<h1>Los mayores</h1>
+			<ul class="list-group">
+				<li v-for="member in olderMembers" class="list-group-item">
+					{{ member.name }} ({{ member.age }})
+				</li>
+			</ul>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: "#app",
+			data: {
+				members: [
+					{
+						name: 'Rosario',
+						age: 56
+					},
+					{
+						name: 'Kevin',
+						age: 17
+					},
+					{
+						name: 'Manuel',
+						age: 62
+					},
+					{
+						name: 'Bellany',
+						age: 58
+					},
+					{
+						name: 'Darinel',
+						age: 26
+					},
+					{
+						name: 'Adolfo',
+						age: 84
+					},
+					{
+						name: 'Julio',
+						age: 31
+					},
+					{
+						name: 'Kristel',
+						age: 25
+					},
+					{
+						name: 'Mayela',
+						age: 50
+					},
+				],
+				order: -1,
+			},
+			computed: {
+				olderMembers() {
+					return _.orderBy(this.members.filter((member) => member.age > 60), 'age', ['desc'])
+				}
+			},
+		})
+	</script>
+</html>

@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>Historias famosas</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h1>¡Escuchemos algunas historias!</h1>
+
+			<ul class="list-group">
+				<li v-for="story in orderedStories" class="list-group-item">
+					{{ story.writer }} dijo "{{ story.plot }}" y tuvo {{ story.upvotes }} votos.
+				</li>
+			</ul>
+			<br>
+			<button @click="reverseOrder" class="btn btn-primary">Revertir orden</button>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: "#app",
+			data: {
+				stories: [
+					{
+						plot: 'Choqué hoy en la Avenida Central',
+						writer: 'Vic',
+						upvotes: 12
+					},
+					{
+						plot: 'Ayer me robaron mi mochila',
+						writer: 'Quique',
+						upvotes: 25
+					},
+					{
+						plot: 'Alguien se comió mu chocolate',
+						writer: 'Quique',
+						upvotes: 58
+					},
+					{
+						plot: 'Me comí el chocolate de alguien más',
+						writer: 'Vic',
+						upvotes: 100
+					},
+				],
+				order: 'desc',
+			},
+			computed: {
+				orderedStories() {
+					// return this.stories.sort((a, b) => (a.upvotes - b.upvotes) * this.order)
+					return _.orderBy(this.stories, 'upvotes', this.order)
+				}
+			},
+			methods: {
+				reverseOrder() {
+					this.order = this.order == 'desc' ? 'asc': 'desc'
+				}
+			}
+		})
+	</script>
+</html>

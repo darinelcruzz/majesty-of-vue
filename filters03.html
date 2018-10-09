@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>Historias</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h1>Escuchemos algunas historias</h1>
+
+			<div>
+				<h3>Las de Vic</h3>
+				<ul class="list-group">
+					<li v-for="story in storiesBy('Vic')" class="list-group-item">
+						{{ story.writer }} dijo "{{ story.plot }}".
+					</li>
+				</ul>
+
+				<h3>Las de Quique</h3>
+				<ul class="list-group">
+					<li v-for="story in storiesBy('Quique')" class="list-group-item">
+						{{ story.writer }} dijo "{{ story.plot }}". 
+					</li>
+				</ul>
+
+				<hr>
+				<div class="form-group">
+					<label for="query">
+						¿Qué estás buscando?
+					</label>
+					<input v-model="query" class="form-control">
+				</div>
+				<h3>Resultados de la búsqueda:</h3>
+				<ul class="list-group">
+					<li v-for="story in search" class="list-group-item">
+						{{ story.writer }} dijo "{{ story.plot }}".
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: "#app",
+			data: {
+				stories: [
+					{
+						plot: 'Choqué hoy en la Avenida Central',
+						writer: 'Vic'
+					},
+					{
+						plot: 'Ayer me robaron mi mochila',
+						writer: 'Quique'
+					},
+					{
+						plot: 'Alguien se comió mu chocolate',
+						writer: 'Quique'
+					},
+					{
+						plot: 'Me comí el chocolate de alguien más',
+						writer: 'Vic'
+					},
+				],
+				query: '',
+			},
+			computed: {
+				search() {
+					var query = this.query
+					return this.stories.filter((story) => story.plot.includes(query))
+				}
+			},
+			methods: {
+				storiesBy(writer) {
+					return this.stories.filter((story) => story.writer == writer);
+				}
+			}
+		})
+	</script>
+</html>

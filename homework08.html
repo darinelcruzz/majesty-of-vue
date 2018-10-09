@@ -1,0 +1,107 @@
+<html>
+	<head>
+		<title>Carruajes tirados por caballos</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h1>Compra de carruajes</h1>
+			<br>
+			<ul class="list-group">
+				<chariot v-for="(chariot, index) in chariots" :key="index" :chariot="chariot" :current="current" @select="updateChariot"></chariot>
+			</ul>
+			<br>
+			<pre>{{ $data }}</pre>
+		</div>
+	</body>
+
+	<script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<template id="chariot">
+		<li class="list-group-item">
+			El carruaje "{{ chariot.name }}" tiene {{ chariot.horses }} {{ chariot.horses  == 1 ? 'caballo': 'caballos' }}. <br>
+			<button :class="'btn btn-' + action.color + ' btn-sm'" @click="rideChariot(chariot)">{{ action.text }}</button>
+		</li>
+	</template>
+
+	<script type="text/javascript">
+		Vue.component('chariot', {
+			template: '#chariot',
+			props: ['chariot', 'current'],
+			computed: {
+				hasMoreHorses() {
+					return this.current.horses < this.chariot.horses
+				},
+				isCurrent() {
+					return this.current.name == this.chariot.name
+				},
+				noChariot() {
+					return this.current.name == null
+				},
+				action() {
+					var action;
+					if (this.noChariot) {
+						action = {
+							color: 'default',
+							text: 'Elige un carruaje'
+						}
+					} else if (this.isCurrent) {
+						action = {
+							color: 'success',
+							text: 'Cabalgando...'
+						}
+					} else if (this.hasMoreHorses) {
+						action = {
+							color: 'primary',
+							text: 'Contrata los caballos'
+						}
+					} else {
+						action = {
+							color: 'danger',
+							text: 'Retira los caballos'
+						}
+					}
+
+					return action;
+				}
+			},
+			methods: {
+				rideChariot(chariot) {
+					this.$emit('select', chariot)
+				}
+			},
+		})
+
+		new Vue({
+			el: '#app',
+			data: {
+				chariots: [
+					{
+						name: 'Olimpo',
+						horses: 4,
+					},
+					{
+						name: 'Flecha',
+						horses: 2,
+					},
+					{
+						name: 'Ícaro',
+						horses: 2,
+					},
+					{
+						name: 'Abraxas',
+						horses: 1,
+					},
+				],
+				current: {}
+			},
+			methods: {
+				updateChariot(chariot) {
+					this.current = chariot;
+				}
+			}
+		})
+	</script>
+</html>

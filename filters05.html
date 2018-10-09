@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>La Gaceta de Gótica</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h1>¡Las identidades reales de los superhéroes!</h1>
+
+			<ul class="list-group">
+				<li v-for="hero in heroes" class="list-group-item">
+					{{ hero | snitch }}
+				</li>
+			</ul>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<script type="text/javascript">
+		Vue.filter('snitch', function (hero) {
+			return '¡' + hero.secretId + ' es ' + hero.firstname + ' ' + hero.lastname + ' en la vida real!'
+		})
+
+		new Vue({
+			el: "#app",
+			data: {
+				heroes: [
+					{
+						firstname: 'Bruce',
+						lastname: 'Wayne',
+						secretId: 'Batman'
+					},
+					{
+						firstname: 'Clark',
+						lastname: 'Kent',
+						secretId: 'Superman'
+					},
+					{
+						firstname: 'Jay',
+						lastname: 'Garrick',
+						secretId: 'Flash'
+					},
+					{
+						firstname: 'Hal',
+						lastname: 'Jordan',
+						secretId: 'Linterna Verde'
+					},
+				],
+				order: -1,
+			},
+			computed: {
+				orderedStories() {
+					return this.stories.sort((a, b) => (a.upvotes - b.upvotes) * this.order)
+				}
+			},
+		})
+	</script>
+</html>

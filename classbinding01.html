@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<title>Clases</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<div class="box" :class="{'red': color, 'blue': !color }"></div>
+			<div class="box" :class="{'purple': color, 'green': !color }"></div>
+			<div class="box" :class="{'red': color, 'blue': !color }"></div>
+			<div class="box" :class="{'purple': color, 'green': !color }"></div>
+			<button @click="flipColor" class="btn btn-block btn-success">Cambiar colores</button>
+		</div>
+	</body>
+
+	<script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+				color: true
+			},
+			methods: {
+				flipColor() {
+					this.color = !this.color;
+				}
+			}
+		})
+	</script>
+
+	<style type="text/css">
+		.red {
+			background: red;
+		}
+		.blue {
+			background: blue;
+		}
+		.purple {
+			background: purple;
+		}
+		.green {
+			background: green;
+		}
+		.box {
+			float: left;
+			width: 200px;
+			height: 200px;
+			margin: 40px;
+			border: 1px solid rgba(0, 0, 0, 2);
+		}
+	</style>
+</html>

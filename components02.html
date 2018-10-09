@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>Componentes</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h3>¡Escuchemos algunas historias!</h3>
+			<ul class="list-group">
+				<story v-for="story in stories" :story="story" :favorite="favorite"></story>
+			</ul>
+
+			<pre>{{ $data }}</pre>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<template id="story-template">
+		<li class="list-group-item">
+			{{ story.writer }} dijo "{{ story.plot }}".
+			Votos {{ story.upvotes }}.
+			<button v-show="!story.voted" @click="upvote" class="btn btn-default btn-sm">Votar</button>
+			<button v-show="!isFavorite" @click="setFavorite" class="btn btn-primary btn-sm">Favorita</button>
+			<span v-show="isFavorite" class="glyphicon glyphicon-star pull-right" aria-hidden="true"></span>
+		</li>
+	</template>
+
+	<script type="text/javascript">
+		Vue.component('story', {
+			props: ['story', 'favorite'],
+			template: "#story-template",
+			methods: {
+				upvote() {
+					this.story.upvotes += 1;
+					this.story.voted = true;
+				},
+				setFavorite() {
+					this.favorite = this.story;
+				}
+			},
+			computed: {
+				isFavorite() {
+					return this.story == this.favorite;
+				}
+			}
+		});
+
+		new Vue({
+			el: "#app",
+			data: {
+				stories: [
+					{
+						plot: 'Choqué hoy en la Avenida Central',
+						writer: 'Vic',
+						upvotes: 0,
+						voted: false,
+					},
+					{
+						plot: 'Ayer me robaron mi mochila',
+						writer: 'Quique',
+						upvotes: 0,
+						voted: false,
+					},
+					{
+						plot: 'Alguien se comió mu chocolate',
+						writer: 'Quique',
+						upvotes: 0,
+						voted: false,
+					},
+					{
+						plot: 'Me comí el chocolate de alguien más',
+						writer: 'Vic',
+						upvotes: 0,
+						voted: false,
+					},
+				],
+				favorite: {}
+			},
+			computed: {
+				search() {
+					return 0
+				}
+			},
+			methods: {
+				storiesBy(writer) {
+					return this.stories.filter((story) => story.writer == writer);
+				}
+			}
+		})
+	</script>
+</html>

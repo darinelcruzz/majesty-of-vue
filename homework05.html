@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Elecciones</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h1>La candidatos</h1>
+
+			<ul class="list-group">
+				<li v-for="candidate in candidates"class="list-group-item">
+					{{ candidate.name }} / {{ candidate.votes }} / 
+					<button @click="candidate.votes++" class="btn btn-default">Votar</button>
+				</li>
+			</ul>
+
+			<br>
+
+			<input class="form-control" @keyup.delete="restart" placeholder="Presiona borrar para reinicar las elecciones"><br>
+
+			<h2>El alcalde es: {{ mayor }}</h2>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: "#app",
+			data: {
+				candidates: [
+					{name: 'Víctor Cancino', votes:0},
+					{name: 'Enrique Hernández', votes:0},
+					{name: 'Darinel Cruz', votes:0},
+				]
+			},
+			computed: {
+				mayor() {
+					var sorted = this.candidates.sort((a, b) => {
+						return b.votes - a.votes
+					});
+
+					return sorted[0].votes == 0 ? 'No hay ganador aún': sorted[0].name;
+				}
+			},
+			methods: {
+				restart() {
+					this.candidates.map((candidate) => {
+						candidate.votes = 0;
+					})
+				}
+			}
+		})
+	</script>
+</html>
