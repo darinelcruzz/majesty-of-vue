@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Clases</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<div id="app" class="container">
+			<h2>Tareas</h2>
+			<ul>
+				<li :class="{'completed': task.done}" :style="styleObject" v-for="task in tasks">
+					{{ task.body }}
+					<button @click="completeTask(task)" class="btn">
+						¡Solo hazlo!
+					</button>
+				</li>
+			</ul>
+		</div>
+	</body>
+
+	<script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+				tasks: [
+					{body: 'Alimenta a los caballos', done: true},
+					{body: 'Limpia las armaduras', done: true},
+					{body: 'Afila la espada', done: false},
+				],
+				styleObject: {
+					fontSize: '25px'
+				}
+			},
+			methods: {
+				completeTask(task) {
+					task.done = !task.done;
+				}
+			}
+		})
+	</script>
+
+	<style type="text/css">
+		.completed {
+			text-decoration: line-through;
+		}
+	</style>
+</html>
